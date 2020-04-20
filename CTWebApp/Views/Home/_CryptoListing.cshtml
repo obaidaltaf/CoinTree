@@ -1,0 +1,33 @@
+﻿@model IEnumerable<CTWebAPI.Models.CryptoRates>
+<div class="panel-container show">
+    <div>
+        <div class="table-responsive">
+            <table id="tblcryptoListing" class="table table-lg table-bordered table-hover table-striped w-100 dataTable dtr-inline">
+                <thead class="bg-primary-500">
+                    <tr>
+                        <th class="text-center">COIN</th>
+                        <th class="text-center">PRICE IN (A$)</th>
+                        <th class="text-center">% CHANGE</th>
+                        <th class="text-center">MARKET</th>
+                        <th class="text-center">UPDATED</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-light">
+                    @{foreach (var _crypto in Model.ToList())
+                        {
+                            <tr>
+                                <td class="text-center text-primary font-weight-bold">@_crypto.buy</td>
+                                <td class="text-center">$ @Math.Round(_crypto.spotRate, 2)</td>
+                                <td class="text-center @(_crypto.changepercentage >= 0 ? "text-success" : "text-danger" )">@Math.Round(_crypto.changepercentage, 2) <i class="fas  @(_crypto.changepercentage >= 0 ? "fa-sort-up text-success" : "fa-sort-down text-danger" )"></i></td>
+                                <td class="text-center">@_crypto.market</td>
+                                <td class="text-center">
+                                    @_crypto.timestamp.Value.DateTime.ToString("HH:mm:ss")
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

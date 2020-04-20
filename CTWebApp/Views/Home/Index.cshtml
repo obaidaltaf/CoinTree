@@ -1,0 +1,6 @@
+﻿<input id="environmentPath" type="hidden" value="@Url.Content("~")" />
+<div id="divCryptoList" style="min-height:450px">
+    @{Html.RenderPartial("_CryptoListing", new List<CTWebAPI.Models.CryptoRates>());}
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/index.js"></script>
