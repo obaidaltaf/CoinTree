@@ -1,8 +1,7 @@
 ﻿using CTWebAPI.Controllers;
 using CTWebAPI.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using System;
 
 namespace CTWebApp.Controllers
 {
@@ -20,11 +19,16 @@ namespace CTWebApp.Controllers
             return View();
         }
 
-        [HttpGet]
-        public async Task<PartialViewResult> PullCryptoList()
+        [HttpPost]
+        public IActionResult PullCryptoList()
         {
-            List<CryptoRates> cryptoRatesList = await _businessLogic.GetCryptoRate();
-            return PartialView("_CryptoListing", cryptoRatesList);
+            DataTableParams dataTableParams = new DataTableParams();
+            dataTableParams.start = Convert.ToInt32(Request.Form["start"]);
+            dataTableParams.length = Convert.ToInt32(Request.Form["length"]);
+            dataTableParams.draw = Convert.ToInt32(Request.Form["draw"]);
+            dataTableParams.searchValue = Request.Form["search[value]"];
+            CryptoRatesViewModel cryptoRatesViewModel = _businessLogic.GetCryptoRate(dataTableParams);
+            return Json(new { data = cryptoRatesViewModel.CryptoRatesList, draw = dataTableParams.draw, recordsTotal = cryptoRatesViewModel.DataTableParams.totalRows, recordsFiltered = cryptoRatesViewModel.DataTableParams.totalRowsAfterfiltering });
         }
     }
 }

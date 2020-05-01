@@ -15,7 +15,7 @@ namespace CTWebAPI.Controllers
             context = _context;
         }
 
-        public async Task<List<CryptoRates>> saveCryptoRate(List<CryptoRates> cryptoRatesList)
+        public async Task<int> saveCryptoRate(List<CryptoRates> cryptoRatesList)
         {
             try
             {
@@ -48,14 +48,37 @@ namespace CTWebAPI.Controllers
                         context.CryptoRates.Add(cryptoRates);
                     }
                 }
-                await context.SaveChangesAsync();
+                return await context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
+                return 0;
                 //throw ex;
                 //Log exception
             }
-            return context.CryptoRates.AsNoTracking().ToList();
+        }
+
+        public CryptoRatesViewModel getCryptoRate(DataTableParams dataTableParams)
+        {
+            try
+            {
+                CryptoRatesViewModel cvm = new CryptoRatesViewModel();
+                cvm.CryptoRatesList = context.CryptoRates.AsNoTracking().ToList();
+                cvm.DataTableParams.totalRows = cvm.CryptoRatesList.Count();
+                if (!string.IsNullOrEmpty(dataTableParams.searchValue))
+                {
+                    cvm.CryptoRatesList = cvm.CryptoRatesList.
+                        Where(x => x.buy.ToLower().Contains(dataTableParams.searchValue.ToLower())).ToList();
+                }
+                cvm.DataTableParams.totalRowsAfterfiltering = cvm.CryptoRatesList.Count;
+                cvm.CryptoRatesList = cvm.CryptoRatesList.Skip(dataTableParams.start).Take(dataTableParams.length).ToList();
+                return cvm;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+                //Log exception
+            }
         }
     }
 }

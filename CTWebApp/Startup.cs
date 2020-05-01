@@ -35,7 +35,7 @@ namespace CTWebApp
             services.AddTransient<IDataAccess, DataAccess>();
             services.AddTransient<IHelper, Helper>();
             services.AddEntityFrameworkSqlite().AddDbContext<CoinTreeDBContext>();
-            //services.AddDbContext<CoinTreeDBContext>(options => options.UseSqlite("Data Source=Database.db"));
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

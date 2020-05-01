@@ -14,17 +14,16 @@ namespace CTWebAPI.Controllers
             _helper = helper;
             _dataAccess = dataAccess;
         }
-        public async Task<List<CryptoRates>> GetCryptoRate()
+
+        public async Task<int> RefreshCryptoRate()
         {
-            try
-            {
-                var cryptoRatesList = await _helper.runAPI();
-                return await _dataAccess.saveCryptoRate(cryptoRatesList);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            var cryptoRatesList = await _helper.runAPI();
+            return await _dataAccess.saveCryptoRate(cryptoRatesList);
+        }
+
+        public CryptoRatesViewModel GetCryptoRate(DataTableParams dataTableParams)
+        {
+            return _dataAccess.getCryptoRate(dataTableParams);
         }
     }
 }

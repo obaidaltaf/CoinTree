@@ -17,9 +17,9 @@ namespace CTWebAPI.Controllers
 
         [HttpGet]
         [Produces(typeof(List<CryptoRates>))]
-        public async Task<List<CryptoRates>> Get()
+        public async Task<int> Get()
         {
-            return await _businessLogic.GetCryptoRate();
+            return await _businessLogic.RefreshCryptoRate();
         }
     }
 }

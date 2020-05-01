@@ -6,6 +6,7 @@ namespace CTWebAPI.Controllers
 {
     public interface IDataAccess
     {
-        Task<List<CryptoRates>> saveCryptoRate(List<CryptoRates> cryptoRates);
+        CryptoRatesViewModel getCryptoRate(DataTableParams dataTableParams);
+        Task<int> saveCryptoRate(List<CryptoRates> cryptoRatesList);
     }
 }
