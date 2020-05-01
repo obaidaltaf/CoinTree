@@ -5,7 +5,7 @@ $(function () {
     table = $('#' + tableId).DataTable({
         orderCellsTop: true,
         dom: 'Bfrtip',
-        rowReorder: true,
+        rowReorder: false,
         lengthChange: false,
         scrollX: true,
         order: [],

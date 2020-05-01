@@ -24,14 +24,14 @@ namespace CTWebAPI.Controllers
         public async Task<List<CryptoRates>> runAPI()
         {
             HttpResponseMessage response = new HttpResponseMessage();
-            var webProxy = new WebProxy(new Uri(configuration["ProxyUri"]), BypassOnLocal: false);
-            var proxyHttpClientHandler = new HttpClientHandler
-            {
-                Proxy = webProxy,
-                UseProxy = true,
-            };
+            //var webProxy = new WebProxy(new Uri(configuration["ProxyUri"]), BypassOnLocal: false);
+            //var proxyHttpClientHandler = new HttpClientHandler
+            //{
+            //    Proxy = webProxy,
+            //    UseProxy = true,
+            //};
 
-            client = new HttpClient(proxyHttpClientHandler);
+            //client = new HttpClient(proxyHttpClientHandler);
             client.BaseAddress = new Uri(configuration["CrytoRatesAPIBaseURL"]);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
